@@ -1,0 +1,45 @@
+//https://www.geeksforgeeks.org/count-distinct-subsequences/
+
+Naive method : 
+  
+#include<bits/stdc++.h>
+using namespace std;
+//silver_Lining 
+typedef long long ll ;
+ 
+void cal ( string s , int len , set < string  > &ss , string temp , int idx   )
+{
+	if ( temp.length() == len )
+	{
+		ss.insert ( temp ) ; 
+		return ; 
+	
+	}
+	if ( idx >= s.length() ) 
+		return ; 
+		
+	cal ( s , len , ss , temp , idx + 1 ) ; 
+	cal ( s , len , ss , temp+ s[ idx] , idx+ 1 ); 
+	
+}
+int main() {
+   
+   ll n , k ; 
+   string s ; 
+   cin >> n >> s ; 
+   ll cost = 0 ; 
+   k -- ; 
+   for ( ll i = n - 1 ; i >= 0 ; i -- )
+   {
+   	set < string > ss ; 
+   	string temp ; 
+   	cal ( s , i , ss , temp , 0  ) ;
+    for ( auto j : ss ) 
+     cout << j << " " ; 
+     cout << endl ; 
+    }
+  
+}
+
+
+Time complexity : O ( 2 ^ n ) 
