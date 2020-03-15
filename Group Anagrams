@@ -1,0 +1,27 @@
+//https://leetcode.com/problems/group-anagrams/
+
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        
+        
+        vector < vector < string > > ans ; 
+        map < string , vector < string > > mp ; 
+        for ( auto i :  strs )
+        {
+            int count [ 26 ] ; 
+            memset ( count , 0 , sizeof ( count ) ) ; 
+            for( int k = 0 ; k < i.length() ; k ++ )
+                    count [ i[ k ] - 'a'  ] ++ ; 
+            string temp ; 
+            for ( int  k = 0 ; k < 26 ; k ++ )
+                    temp = temp + char (  count [ k ] + '0' )  ; 
+            mp [ temp ].push_back ( i ) ; 
+        }
+        
+        for ( auto i : mp )
+        {
+            ans.push_back ( i.second ) ; 
+        }
+        return ans ; 
+    }
+};
