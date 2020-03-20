@@ -1,0 +1,55 @@
+//https://leetcode.com/problems/decode-string/
+
+
+class Solution {
+public:
+    string decodeString(string s) {
+        
+        
+        string ans ; 
+        stack < int > stk1 ; 
+        stack < char > stk2 ; 
+        int n = s.length(), num = 0  ;
+        for ( int i = 0 ; i < n ; i ++ )
+        {
+            if (  ( s [ i ] >= 'a' and s [ i ] <= 'z' ) or( s [ i ] >= 'A' and s [ i ] <= 'Z' )  )
+                    stk2.push ( s [ i ] ) ; 
+            else if (  s[ i ] >= '0' and s [ i ] <= '9' )
+                    num = num * 10 + int ( s [ i ] - '0' ) ; 
+            else if ( s [ i ] == '[' )
+            {
+                stk2.push ( '[' ) ; 
+                stk1.push ( num ) ; 
+                num = 0 ; 
+            }
+            else 
+            {
+                string temp, ss ; 
+                while ( !stk2.empty() and stk2.top() != '[' )
+                {
+                    temp += stk2.top() ; 
+                    stk2.pop() ; 
+                }
+                stk2.pop() ;
+                int c = stk1.top() ; 
+                stk1.pop() ; 
+                reverse ( temp.begin() , temp.end() ) ; 
+                while ( c --)
+                        ss += temp ; 
+                
+                for ( int  j = 0 ; j < ss.length() ; j ++ )
+                        stk2.push ( ss [ j ] ) ; 
+                
+            }
+        }
+        
+        while ( !stk2.empty() )
+        {
+                ans += stk2.top() ; 
+                stk2.pop() ; 
+        }
+        //cout << ans << endl ; 
+        reverse ( ans.begin() , ans.end() ) ; 
+        return ans ; 
+    }
+};
