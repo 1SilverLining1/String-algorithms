@@ -1,0 +1,72 @@
+//https://leetcode.com/problems/minimum-window-substring/
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        
+        
+        
+        map < char , int > mp1 , mp2 ; 
+        int n = s.length() ; 
+        int m = t.length() ; 
+        if ( n < m )
+                return "" ;
+        
+        for  ( int i = 0 ; i < m  ; i ++ )
+            mp1[ t [ i ] ] ++ ; 
+        
+        
+        int start = 0 , end = -1 ; 
+        
+        for ( int i = 0 ; i < n  ; i ++ )
+        {
+            mp2 [ s [ i ] ] ++ ; 
+            int flag = 1 ;
+            for ( auto j : mp1 )
+            {   
+                    if ( mp2 [ j.first ]  < mp1 [ j.first ] )
+                    {
+                        flag = 0 ; 
+                        break ; 
+                    }
+            }
+            if ( flag )
+            {
+                end = i ;
+                break ; 
+            }
+        }
+        if ( end == - 1)
+                return "" ; 
+        
+        int len = end - start + 1 ; 
+        string ans = s.substr ( start  , len ) ; 
+        while ( start < n and end - start + 1 >= m  )
+        {
+            //cout << start << " " << end<< endl ; 
+            if ( end - start + 1 < len )
+            {
+                 len =  end - start + 1 ; 
+                 ans = s.substr ( start  , len ) ;  
+                 //cout << start << " " << end << " " << ans << endl ; 
+
+            }
+            char c = s [ start ] ; 
+            mp2 [ s [ start ] ] -- ; 
+            start ++ ; 
+            while ( mp2 [  c ]  < mp1 [ c ] and end < n )
+            {
+                
+                end ++ ; 
+                mp2 [ s [ end ] ] ++ ; 
+            }
+            
+            if ( mp2 [ c ]  < mp1 [ c ] )
+                    break ; 
+        }
+        
+        
+        return ans ; 
+        
+    }
+};
